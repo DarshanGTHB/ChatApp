@@ -1,5 +1,5 @@
 import express from "express";
-
+import cors from "cors";
 
 import { configDotenv } from "dotenv";
 import { connectDB } from "./lib/db.js";
@@ -17,6 +17,10 @@ const app = express();
     
 app.use(express.json()); // to use this const {fullName, email, password} = req.body;
 app.use(cookieParser()); // const token = req.cookies.jwt;
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/message", messageRoutes);

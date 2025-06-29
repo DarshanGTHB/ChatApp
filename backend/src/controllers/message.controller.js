@@ -42,7 +42,7 @@ export const sendMessage = async (req, res) => {
      const { text, image } = req.body;
     const { receiverId } = req.params;
     const senderId = req.user._id;
-    console.log(receiverId, req.params);
+    // console.log(receiverId, req.params);
     let imageUrl;
     if (image) {
       // Upload base64 image to cloudinary

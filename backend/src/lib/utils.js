@@ -5,15 +5,13 @@ export const generateToken = (userId, res) => {
     expiresIn: "7d",
   });
 
+  const isDev = process.env.NODE_ENV === "development";
   res.cookie("jwt", token, {
-    maxAge : 7*24*60*60*1000, //MS
-    httpOnly:true, // prevents XSS attacks cross-site scripting attacks
-    sameSite:"strict", // CSRF attacks cross-site request forgery attacks
-    secure:process.env.NODE_ENV !== "development" 
+    httpOnly: true,
+    secure: !isDev,
+    sameSite: isDev ? "Lax" : "None",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
   return token;
 };
-   
-
-   

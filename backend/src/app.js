@@ -4,6 +4,7 @@ import cors from "cors";
 import { configDotenv } from "dotenv";
 import { connectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser"
+import bodyParser from "body-parser"; 
 
 
 import authRoutes from "./routers/auth.route.js"
@@ -21,9 +22,13 @@ app.use(cors({
   origin: "http://localhost:5173",
   credentials: true
 }));
+// to use Base4 image
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
 
 app.use("/api/auth", authRoutes);
-app.use("/api/message", messageRoutes);
+app.use("/api/messages", messageRoutes);
 
 const PORT = process.env.PORT;
 

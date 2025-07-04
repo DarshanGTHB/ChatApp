@@ -9,12 +9,14 @@ import bodyParser from "body-parser";
 
 import authRoutes from "./routers/auth.route.js"
 import messageRoutes from "./routers/message.route.js"
+import { app, server } from "./lib/socket.js";
 
 
 
 configDotenv();
 
-const app = express();
+// const app = express();
+// server
     
 app.use(express.json()); // to use this const {fullName, email, password} = req.body;
 app.use(cookieParser()); // const token = req.cookies.jwt;
@@ -32,7 +34,7 @@ app.use("/api/messages", messageRoutes);
 
 const PORT = process.env.PORT;
 
-app.listen(PORT, () => {
-  console.log("App is listening at port : ", PORT);
+server.listen(PORT, () => {
+  console.log("Server is listening at port : ", PORT);
   connectDB();
 });

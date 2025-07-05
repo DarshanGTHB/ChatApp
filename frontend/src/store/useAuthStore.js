@@ -21,7 +21,7 @@ export const useAuthStore = create((set, get) => ({
       get().connectSocket();
     } catch (error) {
       set({ authUser: null });
-      console.log("Error in checkAuth function");
+      console.log("Error in checkAuth function : ", error );
     } finally {
       set({ isCheckingAuth: false });
     }
@@ -49,6 +49,7 @@ export const useAuthStore = create((set, get) => ({
       toast.success("Logged in successfully");
       get().connectSocket();
     } catch (error) {
+      console.log(error);
       toast.error(error.response.data.message);
     } finally {
       set({ isLoggingIn: false });
@@ -84,9 +85,19 @@ export const useAuthStore = create((set, get) => ({
   connectSocket: () => {
     if (!get().authUser || get.socket?.connected) return;
 
-    const socket = io(BASE_URL);
+    const socket = io(BASE_URL, {
+      query : {
+        user_id : get().authUser._id,
+      }
+    });
     socket.connect();
+
     set({ socket:socket });
+
+    // .on() even listing the event
+    socket.on( "getOnlineUsers", ( user_ids ) => {
+      set({onlineUsers:user_ids});
+    }  )
   },
 
   disconnectSocket: () => {

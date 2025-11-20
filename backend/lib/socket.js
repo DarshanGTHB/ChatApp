@@ -8,7 +8,11 @@ const server = http.createServer(app);
 // socket io server on top of express server
 
 const io = new Server(server, {
-  cors: ["https://chatapp-bojl.onrender.com"],
+  cors: {
+    origin: "https://chatapp-bojl.onrender.com",
+    methods: ["GET", "POST"],
+    credentials: true
+  }
 });
 
 

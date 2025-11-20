@@ -35,7 +35,7 @@ console.log(path.join(__dirname, "dist"))
 app.use(express.static(path.join(__dirname, "dist")));
 
 // For any other route, serve index.html (SPA support)
-app.get(/^(?!\/api).*/, (req, res) => {
+app.get(/^(?!\/api)(?!\/socket\.io).*/, (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 

@@ -21,7 +21,7 @@ const __dirname = path.dirname(__filename);
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: "http://localhost:8000",
+  origin: "https://chatapp-bojl.onrender.com",
   credentials: true
 }));
 app.use(bodyParser.json({ limit: '50mb' }));
